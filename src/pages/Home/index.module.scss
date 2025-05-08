@@ -1,4 +1,11 @@
 .container {
   min-height: calc(100vh - 64px - 42px);
-  background-color: #fff;
+  background: linear-gradient(
+    to right,
+    #6b8cce 0%,
+    #7d9fd3 25%,
+    #8fb2d8 50%,
+    #a1c5dd 75%,
+    #b3d8e2 100%
+  );
 }

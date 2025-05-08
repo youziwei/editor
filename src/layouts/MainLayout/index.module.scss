@@ -2,6 +2,7 @@
   .left {
     color: #fff;
     float: left;
+    cursor: pointer;
   }
   .right {
     float: right;
@@ -9,6 +10,7 @@
 }
 
 .main {
+  height: calc(100vh - 105px);
 }
 
 .footer {

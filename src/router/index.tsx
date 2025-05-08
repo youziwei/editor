@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 // pages目录：页面主要结构
 // layputs目录：页面公共部分布局
 import MainLayout from "../layouts/MainLayout";
+import CatalogLayout from "../layouts/CatalogLayout";
 import Home from "../pages/Home/index";
 import Login from "../pages/Login/index";
 import Register from "../pages/Register/index";
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
+        path: "/catalog",
+        element: <CatalogLayout />,
+      },
+      {
         path: "*", // 写在最后 兜底
         element: <NotFound />,
       },
@@ -37,6 +42,7 @@ const router = createBrowserRouter([
 export const HOME_PATHNAME = "/";
 export const LOGIN_PATHNAME = "/login";
 export const REGISTER_PATHNAME = "/register";
+export const MAIN_PATHNAME = "/main";
 
 // 未登录：只能访问首页、登录、注册页
 export function isNoLogin(pathname: string) {

@@ -1,17 +1,19 @@
-// 判断用户是否以登录，未登录跳转登录注册页
+/**
+ * 判断用户是否以登录，未登录跳转登录注册页
+ */
+
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { isNoLogin, LOGIN_PATHNAME } from "../router";
+import useGetUserInfo from "./useGetUserInfo";
 
-function useNavPage(waitingUserData: boolean) {
-  const username = "";
+function useNavPage() {
   // 获取域名后面的参数
+  const { username } = useGetUserInfo();
   const { pathname } = useLocation();
   const nav = useNavigate();
 
   useEffect(() => {
-    if (waitingUserData) return;
-
     // 已登录
     if (username) {
       return;
