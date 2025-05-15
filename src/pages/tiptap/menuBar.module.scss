@@ -1,0 +1,76 @@
+.menubar-container {
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 7px;
+
+  :global {
+    // icon-font样式
+    .icon-h:before,
+    .icon-yinyong:before {
+      color: rgba(0, 0, 0, 0.65);
+    }
+    .icon-save,
+    .icon-pdf {
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 20px;
+    }
+    .i-icon-align-text-left svg {
+      height: 16px !important;
+    }
+
+    // 下拉框
+    .ant-space-item {
+      padding: 0 !important;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+    }
+    // 所有按钮
+    button {
+      border: none;
+      box-shadow: none;
+      svg {
+        height: 16px;
+        width: 16px;
+      }
+    }
+    button:hover,
+    .ant-space-item:hover,
+    .font-color-setting:hover {
+      background-color: #f1f1f1 !important;
+      color: #333;
+    }
+
+    // 颜色选择框
+    .font-color-setting {
+      display: inline-block;
+      position: relative;
+      width: 32px;
+      height: 32px;
+      button,
+      .ant-color-picker-trigger {
+        position: absolute;
+        top: 0;
+      }
+      button {
+        z-index: 2;
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        left: 7px;
+        top: 7px;
+      }
+      .ant-color-picker-trigger {
+        z-index: 1;
+        visibility: hidden;
+        width: 0px;
+        height: 0px;
+        min-width: 0px !important;
+        min-height: 0px !important;
+      }
+    }
+  }
+}

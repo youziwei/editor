@@ -6,6 +6,8 @@ import { useRequest } from "ahooks";
 import { useNavigate } from "react-router-dom";
 import { loginPage } from "../../service/user";
 import { setToken } from "../../utils/handleToken";
+// import { sha256 } from "../../utils/common";
+import sha256 from "crypto-js/sha256";
 import styles from "./index.module.scss";
 
 // redux
@@ -48,7 +50,8 @@ const Login: FC = () => {
 
   const { run } = useRequest(
     async (username: string, password: string) => {
-      const data = await loginPage(username, password);
+      const newPassword = sha256(password).toString();
+      const data = await loginPage(username, newPassword);
       return data;
     },
     {

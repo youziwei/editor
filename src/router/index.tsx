@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 // pages目录：页面主要结构
 // layputs目录：页面公共部分布局
 import MainLayout from "../layouts/MainLayout";
-import CatalogLayout from "../layouts/CatalogLayout";
+import CatalogLayout from "../pages/CatalogLayout";
 import Home from "../pages/Home/index";
 import Login from "../pages/Login/index";
 import Register from "../pages/Register/index";

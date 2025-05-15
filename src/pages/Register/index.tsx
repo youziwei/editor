@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { LOGIN_PATHNAME } from "../../router";
 import { useRequest } from "ahooks";
 import { registerService } from "../../service/user";
+// import { sha256 } from "../../utils/common";
+import sha256 from "crypto-js/sha256";
 import styles from "./index.module.scss";
 
 const Login: FC = () => {
@@ -11,7 +13,8 @@ const Login: FC = () => {
   const { run } = useRequest(
     async (values) => {
       const { username, password } = values;
-      return await registerService(username, password);
+      const newPassword = sha256(password).toString();
+      return await registerService(username, newPassword);
     },
     {
       manual: true,
