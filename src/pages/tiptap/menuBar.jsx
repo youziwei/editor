@@ -1,7 +1,12 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import { Button, message, Dropdown, Space, Popover, ColorPicker } from "antd";
-import { useCurrentEditor } from "@tiptap/react";
-import { saveFile } from "../../service/editor";
 import {
   TextBold,
   TextItalic,
@@ -25,6 +30,9 @@ import {
   Redo,
   BackgroundColor,
 } from "@icon-park/react";
+import { useCurrentEditor } from "@tiptap/react";
+import useGetEditorData from "../../hooks/getData/useGetEditorData";
+
 import styles from "./menuBar.module.scss";
 
 const titleList = [
@@ -221,11 +229,13 @@ const tableList = [
   },
 ];
 
-const MenuBar = (props) => {
-  const { selectIndex } = props;
+const MenuBar = (props, ref) => {
+  const { mode } = props;
+  // 必须写在slotBefore的组件中
   const { editor } = useCurrentEditor();
   const [colorOpen, setColorOpen] = useState(false);
   const [colorOpen2, setColorOpen2] = useState(false);
+  const { selectIndex } = useGetEditorData();
   const menubarRef = useRef(null);
 
   const addImage = useCallback(() => {
@@ -343,13 +353,13 @@ const MenuBar = (props) => {
     }
   };
 
-  const handleClickHtml = useCallback(() => {
-    // HTML格式
-    const html = editor.getHTML();
-    message.success("保存成功");
-    console.log("selectIndex", selectIndex);
-    saveFile(selectIndex.key, html);
-  }, [editor, selectIndex]);
+  // const handleClickHtml = useCallback(() => {
+  //   // HTML格式
+  //   const html = editor.getHTML();
+  //   message.success("保存成功");
+  //   console.log("selectIndex", selectIndex);
+  //   saveFile(selectIndex.key, html);
+  // }, [editor, selectIndex]);
 
   // const handleClickJson = useCallback(() => {
   //   const json = editor.getJSON();
@@ -362,49 +372,28 @@ const MenuBar = (props) => {
   // }, [editor]);
 
   // 转pdf
-  const handleClickToPdf = () => {
-    window.print();
-  };
+  // const handleClickToPdf = () => {
+  //   window.print();
+  // };
 
-  const createStyleFile = () => {
-    const cssFile = `
-    .tiptap-container {
-      border: none !important;
+  useImperativeHandle(ref, () => ({
+    getHTML: editor.getHTML(),
+  }));
+
+  useEffect(() => {
+    if (mode) {
+      editor.setEditable(true);
+    } else {
+      editor.setEditable(false);
     }
-    .tiptap-container div:last-child {
-      overflow: visible;
-    }`;
-    const style = document.createElement("style");
-    style.innerHTML = cssFile;
-    return style;
-  };
-
-  window.onbeforeprint = function (event) {
-    // console.log("打印之前");
-    if (menubarRef.current) menubarRef.current.style.display = "none";
-    const sideBar = document.querySelector(".side-bar-container");
-    sideBar.style.display = "none";
-    document.body.style.overflow = "scroll";
-    const tiptapContainer = document.querySelector(".tiptap-container");
-    tiptapContainer.appendChild(createStyleFile());
-  };
-
-  window.onafterprint = function (event) {
-    // console.log("打印之后");
-    if (menubarRef.current) menubarRef.current.style.display = "flex";
-    const sideBar = document.querySelector(".side-bar-container");
-    sideBar.style.display = "block";
-    document.body.style.overflow = "visible";
-    const tiptapContainer = document.querySelector(".tiptap-container");
-    tiptapContainer.removeChild(
-      tiptapContainer.querySelector(".tiptap-container style")
-    );
-  };
-
-  useEffect(() => {}, []);
+  }, [selectIndex, mode]);
 
   return (
-    <div className={styles["menubar-container"]} ref={menubarRef}>
+    <div
+      className={styles["menubar-container"]}
+      ref={menubarRef}
+      style={{ display: mode ? "flex" : "none" }}
+    >
       <Button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -604,18 +593,18 @@ const MenuBar = (props) => {
       >
         {/* 重做 */}
       </Button>
-      <Button
+      {/* <Button
         onClick={handleClickHtml}
         icon={<i className="iconfont icon-save"></i>}
-      >
-        {/* 保存 */}
-      </Button>
-      <Button
+      > */}
+      {/* 保存 */}
+      {/* </Button> */}
+      {/* <Button
         onClick={handleClickToPdf}
         icon={<i className="iconfont icon-pdf"></i>}
-      ></Button>
+      ></Button> */}
     </div>
   );
 };
 
-export default MenuBar;
+export default forwardRef(MenuBar);

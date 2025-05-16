@@ -31,60 +31,73 @@ const Login: FC = () => {
 
   return (
     <div className={styles["register-container"]}>
-      <Form
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}
-        onFinish={onFinish}
-      >
-        <Form.Item
-          label="用户名"
-          name="username"
-          rules={[
-            { required: true, message: "请输入用户名" },
-            {
-              type: "string",
-              min: 4,
-              max: 20,
-              message: "字符长度在4-20之间",
-            },
-            { pattern: /^\w+$/, message: "只能是字母数字下划线" },
-          ]}
+      <div className={styles["register-box"]}>
+        <div className={styles["register-header"]}>
+          <h2>注册账户</h2>
+          <p>请输入用户名和密码以创建用户</p>
+        </div>
+        <Form
+          // labelCol={{ span: 6 }}
+          // wrapperCol={{ span: 12 }}
+          onFinish={onFinish}
+          className={styles["register-form"]}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="密码"
-          name="password"
-          rules={[{ required: true, message: "请输入密码" }]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item
-          label="确认密码"
-          name="confirm"
-          rules={[
-            { required: true, message: "请输入密码" },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                // 获取password与当前value对比
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                } else {
-                  return Promise.reject(new Error("两次密码不一致"));
-                }
+          <Form.Item
+            label="用户名或邮箱"
+            name="username"
+            rules={[
+              { required: true, message: "请输入用户名" },
+              {
+                type: "string",
+                min: 4,
+                max: 20,
+                message: "字符长度在4-20之间",
               },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            注册
-          </Button>
+              { pattern: /^\w+$/, message: "只能是字母数字下划线" },
+            ]}
+          >
+            <Input className={styles["form-input"]} />
+          </Form.Item>
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[{ required: true, message: "请输入密码" }]}
+          >
+            <Input.Password className={styles["form-input"]} />
+          </Form.Item>
+          <Form.Item
+            label="确认密码"
+            name="confirm"
+            rules={[
+              { required: true, message: "请输入密码" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  // 获取password与当前value对比
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  } else {
+                    return Promise.reject(new Error("两次密码不一致"));
+                  }
+                },
+              }),
+            ]}
+          >
+            <Input.Password className={styles["form-input"]} />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={styles["form-btn"]}
+            >
+              注册
+            </Button>
+          </Form.Item>
+        </Form>
+        <div className={styles["login-footer"]}>
           <Link to={LOGIN_PATHNAME}>已有账户，登录</Link>
-        </Form.Item>
-      </Form>
+        </div>
+      </div>
     </div>
   );
 };

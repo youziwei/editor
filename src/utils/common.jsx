@@ -7,7 +7,7 @@ export const handledTree = (arr) => {
     const { id, title, type, parentId } = item;
 
     // 定义treeNode并加入map
-    const treeNode = { key: id, title, type };
+    const treeNode = { key: id, label: title, type };
     idToTreeNode.set(id, treeNode);
 
     // 找到parentNode并加入到它的children

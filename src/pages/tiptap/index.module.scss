@@ -1,7 +1,7 @@
 // 初始化样式
 .tiptap-container {
-  flex: 1;
-  border: 1px solid #ccc;
+  height: calc(100vh - 90px);
+  // border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
   :global {

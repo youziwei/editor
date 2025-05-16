@@ -1,11 +1,11 @@
 /**
- * 判断用户是否以登录，未登录跳转登录注册页
+ * 判断用户是否以登录，未登录跳转至首页
  */
 
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { isNoLogin, LOGIN_PATHNAME } from "../router";
-import useGetUserInfo from "./useGetUserInfo";
+import { isNoLogin, HOME_PATHNAME } from "../router";
+import useGetUserInfo from "./getData/useGetUserInfo";
 
 function useNavPage() {
   // 获取域名后面的参数
@@ -25,7 +25,7 @@ function useNavPage() {
       return;
     } else {
       // 如果不是，则跳转到登录页面
-      nav(LOGIN_PATHNAME);
+      nav(HOME_PATHNAME);
     }
   }, [pathname]);
 }

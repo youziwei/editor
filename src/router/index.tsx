@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 // pages目录：页面主要结构
 // layputs目录：页面公共部分布局
 import MainLayout from "../layouts/MainLayout";
-import CatalogLayout from "../pages/CatalogLayout";
+import Editor from "../pages/Editor";
 import Home from "../pages/Home/index";
 import Login from "../pages/Login/index";
 import Register from "../pages/Register/index";
@@ -10,8 +10,8 @@ import NotFound from "../pages/NotFound";
 
 const router = createBrowserRouter([
   {
+    // 在外层加一个根目录来阻止页面跳转
     path: "/",
-    // 将页面中公共的部分提取出来
     element: <MainLayout />,
     children: [
       {
@@ -27,8 +27,8 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/catalog",
-        element: <CatalogLayout />,
+        path: "/editor",
+        element: <Editor />,
       },
       {
         path: "*", // 写在最后 兜底
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
 export const HOME_PATHNAME = "/";
 export const LOGIN_PATHNAME = "/login";
 export const REGISTER_PATHNAME = "/register";
-export const MAIN_PATHNAME = "/main";
+export const EDITOR_PATHNAME = "/editor";
 
 // 未登录：只能访问首页、登录、注册页
 export function isNoLogin(pathname: string) {

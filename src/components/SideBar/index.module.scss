@@ -1,0 +1,10 @@
+// 弹框
+:global {
+  .ant-drawer-content-wrapper {
+    max-width: 378px !important;
+    width: 60% !important;
+  }
+  .ant-drawer-body {
+    padding: 0 !important;
+  }
+}

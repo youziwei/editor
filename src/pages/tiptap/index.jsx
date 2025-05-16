@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useImperativeHandle, forwardRef } from "react";
 import { EditorProvider, FloatingMenu, BubbleMenu } from "@tiptap/react";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
@@ -38,8 +38,9 @@ import MenuBar from "./menuBar";
 
 const lowlight = createLowlight(all);
 
-const Tiptap = (props) => {
-  const { data, selectIndex } = props;
+const Tiptap = (props, ref) => {
+  const { data, mode } = props;
+  const menuBarRef = useRef();
   // 配置
   const extensions = [
     Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -96,12 +97,16 @@ const Tiptap = (props) => {
     TableCell,
   ];
 
+  useImperativeHandle(ref, () => ({
+    editorRef: menuBarRef.current,
+  }));
+
   return (
     <div className={styles["tiptap-container"]}>
       {data && (
         <EditorProvider
           // 在之前插入一段内容
-          slotBefore={<MenuBar selectIndex={selectIndex} />}
+          slotBefore={<MenuBar ref={menuBarRef} mode={mode} />}
           // slotAfter：之后插入
           extensions={extensions}
           content={data}
@@ -111,4 +116,4 @@ const Tiptap = (props) => {
   );
 };
 
-export default Tiptap;
+export default forwardRef(Tiptap);
